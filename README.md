@@ -1,5 +1,3 @@
-fourth commit
-third commit
-second commit
+pratic git commond
 print
 hello test!!
