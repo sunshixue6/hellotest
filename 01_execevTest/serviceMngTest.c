@@ -3,11 +3,44 @@
 #include <dirent.h>
 #include <string.h>
 
+/* Define declare */
 #define SDF_SUFFIX                ".sdf"
 #define SDF_PATH                  "./sdf/"
 #define MAX_FILENAME_BUFSIZE      30
 #define MAX_FILE_LINE_STR_BUFSIZE 128
 
+/* Globle member declare */
+
+enum SDF_META_E {
+  META_MODE = 0,
+  META_RESTART,
+  META_EXEC,
+  META_AFTER,
+  META_REQUIRES,
+  META_WORKDIR,
+  META_ENV,
+  META_PWRCONDITION,
+  META_CPULIMIT,
+  META_MEMLIMIT,
+  META_HEARTBEATINTERVAL,
+  META_MAX,
+};
+
+const char *sdf_metakey[] = {
+    [META_MODE]              = "Mode",
+    [META_RESTART]           = "Restart",
+    [META_EXEC]              = "Exec",
+    [META_AFTER]             = "After",
+    [META_REQUIRES]          = "Requires",
+    [META_WORKDIR]           = "WorkDir",
+    [META_ENV]               = "Environment",
+    [META_PWRCONDITION]      = "PwrCondition",
+    [META_CPULIMIT]          = "CpuLimit",
+    [META_MEMLIMIT]          = "MemLimit",
+    [META_HEARTBEATINTERVAL] = "HeartBeatInterval"
+};
+
+/* Func declare */
 int paseSDFFile(const char *pName);
 
 /*****************
@@ -128,6 +161,11 @@ int paseSDFFile(const char *pName)
         }
 
         printf("line = %s",lineStrBuf);
+
+        if (strncmp(lineStrBuf, sdf_metakey[META_EXEC], strlen(sdf_metakey[META_EXEC])) == 0)
+        {
+            printf("match Exce prefix = %s\n", sdf_metakey[META_EXEC]);
+        }
     }
 
     fclose(fp);
