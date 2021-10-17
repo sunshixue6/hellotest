@@ -3,12 +3,16 @@
 #include <dirent.h>
 #include <string.h>
 
+<<<<<<< HEAD
 /* Define declare */
+=======
+>>>>>>> b22f16f0b6707835ae29c16af88c9d96beb215d7
 #define SDF_SUFFIX                ".sdf"
 #define SDF_PATH                  "./sdf/"
 #define MAX_FILENAME_BUFSIZE      30
 #define MAX_FILE_LINE_STR_BUFSIZE 128
 
+<<<<<<< HEAD
 /* Globle member declare */
 
 enum SDF_META_E {
@@ -41,6 +45,8 @@ const char *sdf_metakey[] = {
 };
 
 /* Func declare */
+=======
+>>>>>>> b22f16f0b6707835ae29c16af88c9d96beb215d7
 int paseSDFFile(const char *pName);
 
 /*****************
@@ -161,11 +167,14 @@ int paseSDFFile(const char *pName)
         }
 
         printf("line = %s",lineStrBuf);
+<<<<<<< HEAD
 
         if (strncmp(lineStrBuf, sdf_metakey[META_EXEC], strlen(sdf_metakey[META_EXEC])) == 0)
         {
             printf("match Exce prefix = %s\n", sdf_metakey[META_EXEC]);
         }
+=======
+>>>>>>> b22f16f0b6707835ae29c16af88c9d96beb215d7
     }
 
     fclose(fp);
