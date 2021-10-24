@@ -4,6 +4,8 @@
 # vim backup files
 *.swp
 
+01_execevTest/output
+
 # 忽略所有 .a 结尾的文件
 #*.a
 # 但 lib.a 除外
