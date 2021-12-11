@@ -1,0 +1,72 @@
+[33mcommit 14e19f14d685351a3a4a3b259270a4f4dccfd6ed[m[33m ([m[1;36mHEAD -> [m[1;32msunshixue_dev[m[33m, [m[1;31morigin/sunshixue_dev[m[33m)[m
+Author: sunshixue <sunshxiue@lixiang.com>
+Date:   Sat Dec 11 09:29:39 2021 +0800
+
+    add ssh monitor
+
+[1mdiff --git a/02_monitorTest/monitor.py b/02_monitorTest/monitor.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f28c43d[m
+[1m--- /dev/null[m
+[1m+++ b/02_monitorTest/monitor.py[m
+[36m@@ -0,0 +1,60 @@[m
+[32m+[m[32mimport paramiko[m
+[32m+[m[32mimport uuid[m
+[32m+[m[32mimport time[m
+[32m+[m[32mimport sys[m
+[32m+[m[32mimport datetime[m
+[32m+[m
+[32m+[m[32mclass Haproxy(object):[m
+[32m+[m
+[32m+[m[32m    def __init__(self):[m
+[32m+[m[32m        self.host = '172.31.30.32'[m
+[32m+[m[32m        self.port = 22[m
+[32m+[m[32m        self.username = 'root'[m
+[32m+[m[32m        self.pwd = 'root'[m
+[32m+[m[32m        self.__k = None[m
+[32m+[m
+[32m+[m[32m    def run(self):[m
+[32m+[m[32m        self.connect()[m
+[32m+[m[32m        ssh = paramiko.SSHClient()[m
+[32m+[m[32m        ssh._transport = self.__transport[m
+[32m+[m[32m        str = ""[m
+[32m+[m[32m        curr_time = datetime.datetime.now()[m
+[32m+[m[32m        print(datetime.datetime.strftime(curr_time,'%Y-%m-%d %H:%M:%S'))[m
+[32m+[m[32m        print("BEGIN")[m
+[32m+[m[32m        while 1:[m
+[32m+[m[32m          time.sleep(1)[m
+[32m+[m[32m          # stdin, stdout, stderr = ssh.exec_command('export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/ota/install ', 1024, 1000)[m
+[32m+[m[32m          # str = stdout.read().decode('utf-8')[m
+[32m+[m[32m          # print(str)[m
+[32m+[m[32m          # stdin, stdout, stderr = ssh.exec_command('/bin/ps ', 1024, 1000)[m
+[32m+[m[32m          # str = stdout.read().decode('utf-8')[m
+[32m+[m[32m          # print(str)[m
+[32m+[m[32m          curr_time = datetime.datetime.now()[m
+[32m+[m[32m          print(datetime.datetime.strftime(curr_time,'%Y-%m-%d %H:%M:%S'))[m
+[32m+[m[32m          stdin, stdout, stderr = ssh.exec_command(' /lib/ld-2.32.so --library-path /ota/install/ /ota/install/bin/ps aux|head -1;/lib/ld-2.32.so --library-path /ota/install/  /ota/install/bin/ps aux|grep -v PID|sort -rn -k +3|head', 1024, 1000)[m
+[32m+[m[32m          str = stdout.read().decode('utf-8')[m
+[32m+[m[32m          print(str)[m
+[32m+[m
+[32m+[m[32m          stdin, stdout, stderr = ssh.exec_command(' /lib/ld-2.32.so --library-path /ota/install/ /ota/install/bin/ps aux|head -1;/lib/ld-2.32.so --library-path /ota/install/  /ota/install/bin/ps aux|grep -v PID|sort -rn -k +4|head ', 1024, 1000)[m
+[32m+[m[32m          str = stdout.read().decode('utf-8')[m
+[32m+[m[32m          print(str)[m
+[32m+[m[32m        self.close()[m
+[32m+[m
+[32m+[m[32m        print("END")[m
+[32m+[m
+[32m+[m[32m    def connect(self):[m
+[32m+[m[32m        transport = paramiko.Transport((self.host,self.port))[m
+[32m+[m[32m        transport.connect(username=self.username,password=self.pwd)[m
+[32m+[m[32m        self.__transport = transport[m
+[32m+[m
+[32m+[m[32m    def close(self):[m
+[32m+[m[32m        self.__transport.close()[m
+[32m+[m
+[32m+[m[32mha = Haproxy()[m
+[32m+[m[32mwhile 1:[m
+[32m+[m[32m  try:[m
+[32m+[m[32m      ha.run()[m
+[32m+[m[32m  except IOError:[m
+[32m+[m[32m      print("err")[m
+[32m+[m[32m  else:[m
+[32m+[m[32m      print("else")[m
