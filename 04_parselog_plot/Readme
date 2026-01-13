@@ -1,0 +1,5 @@
+#1 执行程序解析日志文件生成.csv文件
+./paseLog out.csv
+
+#2. 描点绘图
+python3 plot.py out.csv
